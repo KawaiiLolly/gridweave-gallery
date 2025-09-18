@@ -1,10 +1,10 @@
 export interface GalleryImage {
   id: string;
-  url: string;
   name: string;
+  url: string;
   folder: string;
   uploadDate: Date;
-  file?: File;
+  isFavorite?: boolean;
 }
 
 export interface GalleryFolder {
@@ -13,4 +13,4 @@ export interface GalleryFolder {
   count: number;
 }
 
-export type FilterType = 'all' | string;
+export type FilterType = 'all' | 'favorites' | string;

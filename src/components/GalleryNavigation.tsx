@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FolderOpen, Grid3x3, Plus } from "lucide-react";
+import { FolderOpen, Grid3x3, Plus, Heart } from "lucide-react";
 import { GalleryFolder, FilterType } from "@/types/gallery";
 
 interface GalleryNavigationProps {
@@ -34,6 +34,20 @@ export function GalleryNavigation({
           >
             <FolderOpen className="h-4 w-4 mr-2" />
             All Photos ({totalImages})
+          </Button>
+          
+          <Button
+            variant={activeFilter === 'favorites' ? 'default' : 'ghost'}
+            size="sm"
+            onClick={() => onFilterChange('favorites')}
+            className={`text-sm ${
+              activeFilter === 'favorites' 
+                ? 'bg-gallery-favorite hover:bg-gallery-favorite-hover text-white' 
+                : ''
+            }`}
+          >
+            <Heart className={`h-4 w-4 mr-2 ${activeFilter === 'favorites' ? 'fill-current' : ''}`} />
+            Favorites
           </Button>
           
           {folders.map((folder) => (

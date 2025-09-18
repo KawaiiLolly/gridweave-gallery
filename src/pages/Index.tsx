@@ -28,6 +28,7 @@ const Index = () => {
   // Filter images based on active filter
   const filteredImages = useMemo(() => {
     if (activeFilter === 'all') return images;
+    if (activeFilter === 'favorites') return images.filter(image => image.isFavorite);
     return images.filter(image => image.folder === activeFilter);
   }, [images, activeFilter]);
 
@@ -47,6 +48,16 @@ const Index = () => {
     }
   };
 
+  const handleToggleFavorite = (imageId: string) => {
+    setImages(prev => 
+      prev.map(image => 
+        image.id === imageId 
+          ? { ...image, isFavorite: !image.isFavorite }
+          : image
+      )
+    );
+  };
+
   return (
     <div className="gallery-container min-h-screen">
       <GalleryNavigation
@@ -60,6 +71,7 @@ const Index = () => {
       <GalleryGrid 
         images={filteredImages}
         loading={loading}
+        onToggleFavorite={handleToggleFavorite}
       />
       
       <ImageUpload

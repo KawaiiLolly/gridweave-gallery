@@ -57,6 +57,8 @@ export default {
           "accent-muted": "hsl(var(--gallery-accent-muted))",
           border: "hsl(var(--gallery-border))",
           "surface-elevated": "hsl(var(--gallery-surface-elevated))",
+          favorite: "hsl(var(--gallery-favorite))",
+          "favorite-hover": "hsl(var(--gallery-favorite-hover))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

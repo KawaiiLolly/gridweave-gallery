@@ -2,14 +2,17 @@ import { useState } from "react";
 import { Heart, Download, Eye } from "lucide-react";
 import { GalleryImage } from "@/types/gallery";
 import { Button } from "@/components/ui/button";
+import { ImageModal } from "@/components/ImageModal";
 
 interface GalleryGridProps {
   images: GalleryImage[];
   loading?: boolean;
+  onToggleFavorite?: (imageId: string) => void;
 }
 
-export function GalleryGrid({ images, loading }: GalleryGridProps) {
+export function GalleryGrid({ images, loading, onToggleFavorite }: GalleryGridProps) {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
   const handleImageError = (imageId: string) => {
     setImageErrors(prev => new Set(prev).add(imageId));
@@ -64,8 +67,9 @@ export function GalleryGrid({ images, loading }: GalleryGridProps) {
               <img
                 src={image.url}
                 alt={image.name}
-                className="w-full h-auto block transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-auto block transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                 onError={() => handleImageError(image.id)}
+                onClick={() => setSelectedImage(image)}
                 loading="lazy"
               />
             ) : (
@@ -77,11 +81,25 @@ export function GalleryGrid({ images, loading }: GalleryGridProps) {
             {/* Image overlay with actions */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
               <div className="flex space-x-2">
-                <Button size="sm" variant="secondary" className="shadow-lg">
+                <Button 
+                  size="sm" 
+                  variant="secondary" 
+                  className="shadow-lg"
+                  onClick={() => setSelectedImage(image)}
+                >
                   <Eye className="h-4 w-4" />
                 </Button>
-                <Button size="sm" variant="secondary" className="shadow-lg">
-                  <Heart className="h-4 w-4" />
+                <Button 
+                  size="sm" 
+                  variant="secondary" 
+                  className={`shadow-lg transition-colors ${
+                    image.isFavorite 
+                      ? 'bg-gallery-favorite hover:bg-gallery-favorite-hover text-white' 
+                      : ''
+                  }`}
+                  onClick={() => onToggleFavorite?.(image.id)}
+                >
+                  <Heart className={`h-4 w-4 ${image.isFavorite ? 'fill-current' : ''}`} />
                 </Button>
                 <Button size="sm" variant="secondary" className="shadow-lg">
                   <Download className="h-4 w-4" />
@@ -97,6 +115,12 @@ export function GalleryGrid({ images, loading }: GalleryGridProps) {
           </div>
         </div>
       ))}
+      
+      <ImageModal
+        image={selectedImage!}
+        isOpen={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+      />
     </div>
   );
 }
