@@ -47,6 +47,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        gallery: {
+          surface: "hsl(var(--gallery-surface))",
+          card: "hsl(var(--gallery-card))",
+          "card-hover": "hsl(var(--gallery-card-hover))",
+          text: "hsl(var(--gallery-text))",
+          "text-muted": "hsl(var(--gallery-text-muted))",
+          accent: "hsl(var(--gallery-accent))",
+          "accent-muted": "hsl(var(--gallery-accent-muted))",
+          border: "hsl(var(--gallery-border))",
+          "surface-elevated": "hsl(var(--gallery-surface-elevated))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
