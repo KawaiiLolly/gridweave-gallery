@@ -1,14 +1,66 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { GalleryNavigation } from "@/components/GalleryNavigation";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { ImageUpload } from "@/components/ImageUpload";
 import { GalleryImage, GalleryFolder, FilterType } from "@/types/gallery";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Camera, LogIn } from "lucide-react";
 
 const Index = () => {
+  const { user, loading: authLoading, signOut } = useAuth();
+  const navigate = useNavigate();
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Show loading while auth is initializing
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center space-y-4">
+          <Camera className="h-12 w-12 mx-auto text-primary animate-pulse" />
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login prompt if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <Card className="w-full max-w-md border-border/50 bg-card/50 backdrop-blur-sm">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 rounded-full bg-primary/20">
+                <Camera className="h-8 w-8 text-primary" />
+              </div>
+            </div>
+            <CardTitle className="text-2xl bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+              GridWeave Gallery
+            </CardTitle>
+            <CardDescription>
+              Please sign in to access your photo gallery
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button 
+              onClick={() => navigate('/auth')} 
+              className="w-full"
+              size="lg"
+            >
+              <LogIn className="mr-2 h-4 w-4" />
+              Sign In / Sign Up
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   // Generate folders based on images
   const folders: GalleryFolder[] = useMemo(() => {
@@ -66,6 +118,8 @@ const Index = () => {
         onFilterChange={setActiveFilter}
         totalImages={images.length}
         onUploadClick={() => setIsUploadOpen(true)}
+        user={user}
+        onSignOut={signOut}
       />
       
       <GalleryGrid 

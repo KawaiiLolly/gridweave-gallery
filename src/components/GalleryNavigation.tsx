@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { FolderOpen, Grid3x3, Plus, Heart } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { FolderOpen, Grid3x3, Plus, Heart, User, LogOut } from "lucide-react";
 import { GalleryFolder, FilterType } from "@/types/gallery";
+import { User as SupabaseUser } from '@supabase/supabase-js';
 
 interface GalleryNavigationProps {
   folders: GalleryFolder[];
@@ -8,6 +11,8 @@ interface GalleryNavigationProps {
   onFilterChange: (filter: FilterType) => void;
   totalImages: number;
   onUploadClick: () => void;
+  user: SupabaseUser;
+  onSignOut: () => Promise<void>;
 }
 
 export function GalleryNavigation({
@@ -15,7 +20,9 @@ export function GalleryNavigation({
   activeFilter,
   onFilterChange,
   totalImages,
-  onUploadClick
+  onUploadClick,
+  user,
+  onSignOut
 }: GalleryNavigationProps) {
   return (
     <nav className="gallery-nav fixed top-0 left-0 right-0 z-50 px-6 py-4">
@@ -63,15 +70,46 @@ export function GalleryNavigation({
           ))}
         </div>
         
-        <Button 
-          onClick={onUploadClick}
-          variant="default"
-          size="sm"
-          className="shadow-glow"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Upload Images
-        </Button>
+        <div className="flex items-center space-x-4">
+          <Button 
+            onClick={onUploadClick}
+            variant="default"
+            size="sm"
+            className="shadow-glow"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Upload Images
+          </Button>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full">
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback className="bg-primary/20 text-primary">
+                    {user.email?.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">
+                    {user.email}
+                  </p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {user.email}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={onSignOut} className="text-red-600 focus:text-red-600">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </nav>
   );
