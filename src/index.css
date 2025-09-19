@@ -6,59 +6,61 @@
 
 @layer base {
   :root {
-    /* Dark Gallery Theme - Based on provided color palette */
-    --background: 208 100% 2%;
+    /* Purple & Black Sleek Modern Dark Theme */
+    --background: 0 0% 3%;
     --foreground: 0 0% 95%;
 
-    --card: 208 26% 8%;
+    --card: 0 0% 8%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 208 26% 8%;
+    --popover: 0 0% 8%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 208 100% 22%;
+    --primary: 271 91% 65%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 208 26% 15%;
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 208 26% 12%;
+    --muted: 0 0% 12%;
     --muted-foreground: 0 0% 70%;
 
-    --accent: 9 68% 50%;
+    --accent: 280 100% 70%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 208 26% 15%;
-    --input: 208 26% 12%;
-    --ring: 208 100% 22%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 271 91% 65%;
 
     --radius: 0.75rem;
 
     /* Gallery-specific design tokens */
-    --gallery-surface: 208 100% 2%;
-    --gallery-card: 208 26% 8%;
-    --gallery-card-hover: 208 26% 12%;
+    --gallery-surface: 0 0% 3%;
+    --gallery-card: 0 0% 8%;
+    --gallery-card-hover: 0 0% 12%;
     --gallery-text: 0 0% 95%;
     --gallery-text-muted: 0 0% 70%;
-    --gallery-accent: 208 100% 22%;
-    --gallery-accent-muted: 208 26% 15%;
-    --gallery-border: 208 26% 15%;
-    --gallery-surface-elevated: 208 26% 10%;
-    --gallery-favorite: 9 68% 50%;
-    --gallery-favorite-hover: 22 100% 62%;
+    --gallery-accent: 271 91% 65%;
+    --gallery-accent-muted: 271 50% 35%;
+    --gallery-border: 0 0% 15%;
+    --gallery-surface-elevated: 0 0% 10%;
+    --gallery-favorite: 340 100% 65%;
+    --gallery-favorite-hover: 340 100% 75%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(208 100% 22%), hsl(9 68% 50%));
-    --gradient-surface: linear-gradient(180deg, hsl(208 100% 2%), hsl(208 26% 4%));
-    --gradient-card: linear-gradient(145deg, hsl(208 26% 8%), hsl(208 26% 6%));
+    --gradient-primary: linear-gradient(135deg, hsl(271 91% 65%), hsl(280 100% 70%));
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 3%), hsl(0 0% 5%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 8%), hsl(0 0% 6%));
+    --gradient-purple-glow: linear-gradient(135deg, hsl(271 91% 65% / 0.1), hsl(280 100% 70% / 0.1));
 
     /* Shadows */
-    --shadow-soft: 0 4px 6px -1px hsl(208 100% 1% / 0.4);
-    --shadow-elevated: 0 10px 25px -3px hsl(208 100% 1% / 0.5);
-    --shadow-glow: 0 0 40px hsl(208 100% 22% / 0.2);
+    --shadow-soft: 0 4px 6px -1px hsl(0 0% 0% / 0.4);
+    --shadow-elevated: 0 10px 25px -3px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px hsl(271 91% 65% / 0.3);
+    --shadow-purple: 0 0 20px hsl(271 91% 65% / 0.2);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
