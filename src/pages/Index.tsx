@@ -17,7 +17,29 @@ const Index = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Show loading while auth is initializing
+  // Generate folders based on images - ALL HOOKS MUST BE CALLED BEFORE ANY CONDITIONAL RETURNS
+  const folders: GalleryFolder[] = useMemo(() => {
+    const folderMap = new Map<string, number>();
+    
+    images.forEach(image => {
+      folderMap.set(image.folder, (folderMap.get(image.folder) || 0) + 1);
+    });
+    
+    return Array.from(folderMap.entries()).map(([name, count]) => ({
+      id: `folder-${name}`,
+      name,
+      count
+    }));
+  }, [images]);
+
+  // Filter images based on active filter
+  const filteredImages = useMemo(() => {
+    if (activeFilter === 'all') return images;
+    if (activeFilter === 'favorites') return images.filter(image => image.isFavorite);
+    return images.filter(image => image.folder === activeFilter);
+  }, [images, activeFilter]);
+
+  // Show loading while auth is initializing - CONDITIONAL RETURNS AFTER ALL HOOKS
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -61,28 +83,6 @@ const Index = () => {
       </div>
     );
   }
-
-  // Generate folders based on images
-  const folders: GalleryFolder[] = useMemo(() => {
-    const folderMap = new Map<string, number>();
-    
-    images.forEach(image => {
-      folderMap.set(image.folder, (folderMap.get(image.folder) || 0) + 1);
-    });
-    
-    return Array.from(folderMap.entries()).map(([name, count]) => ({
-      id: `folder-${name}`,
-      name,
-      count
-    }));
-  }, [images]);
-
-  // Filter images based on active filter
-  const filteredImages = useMemo(() => {
-    if (activeFilter === 'all') return images;
-    if (activeFilter === 'favorites') return images.filter(image => image.isFavorite);
-    return images.filter(image => image.folder === activeFilter);
-  }, [images, activeFilter]);
 
   const handleUpload = async (newImages: GalleryImage[]) => {
     setLoading(true);
